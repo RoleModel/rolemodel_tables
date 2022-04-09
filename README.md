@@ -1,2 +1,2 @@
-# rolemodel_ransack
-Rolemodel helpers for ransack
+# rolemodel_tables
+Rolemodel helpers for advanced table functionality
