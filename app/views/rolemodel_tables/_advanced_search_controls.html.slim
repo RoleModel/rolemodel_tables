@@ -1,0 +1,21 @@
+.margin-y-md data-controller='advanced-table-search submit-on-select' data-advanced-table-search-advanced-label-value='Advanced Filters'
+  = search_form_for filter_view.ransack, url: request.path, html: { class: 'simple_form' , data: { 'submit-on-select-target' => 'form' }} do |f|
+    = hidden_field_tag :show_advanced_search, params.fetch(:show_advanced_search, false), data: { 'advanced-table-search-target': 'showSearchHiddenInput' }
+
+    .card.margin-bottom-md data-advanced-table-search-target='controlsContainer'
+      .flex.items-center.gap-sm
+        / TODO: INLINE STYLES BAD
+        .flex.items-center.gap-sm style='width: 300px'
+          = f.search_field filter_view.quick_search, placeholder: 'Keyword', class: 'form__input'
+          = f.button :search, class: 'btn btn--primary', data: { 'advanced-table-search-target': 'keywordSearchButton' }
+
+        button.project-search-toggle data-advanced-table-search-target='toggleButton' type='button' data-action='click->advanced-table-search#toggle' Show Advanced Filters
+
+      .margin-top-md.hidden data-advanced-table-search-target='toggleableArea'
+        .flex.flex-wrap
+          - filter_view.advanced_filters.each do |filter|
+            = filter.form_row(f).html_safe
+
+        .flex.justify-end.items-center.gap-sm.margin-top-md
+          button.btn.btn--outline type='button' data-action='click->advanced-table-search#clear' Clear
+          = f.button :search, class: 'btn btn--primary'
